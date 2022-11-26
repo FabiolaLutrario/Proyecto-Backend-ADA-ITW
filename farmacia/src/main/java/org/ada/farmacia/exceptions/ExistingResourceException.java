@@ -7,4 +7,8 @@ public class ExistingResourceException extends RuntimeException {
     public ExistingResourceException() {
         super(MESSAGE);
     }
+
+    public ExistingResourceException(String message) {
+        super(message);
+    }
 }

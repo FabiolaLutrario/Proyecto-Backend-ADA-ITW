@@ -3,8 +3,8 @@ package org.ada.farmacia.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name="detalle_compra_medicamento")
-public class DetalleCompraMedicamento {
+@Table(name="detalle_compra_miscelaneo")
+public class DetalleCompraMiscelaneo {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -16,22 +16,21 @@ public class DetalleCompraMedicamento {
     @Column(nullable=false)
     private Float precio;
 
-    @ManyToOne(fetch=FetchType.EAGER)//Carga el medicamento asociados a los detalles de compra
-    //cada vez que se consulten los detalles de compra asociados al medicamento.
-    @JoinColumn(name="medicamento_id", nullable=false)
-    private Medicamento medicamento;
+    @ManyToOne(fetch=FetchType.EAGER)
+    @JoinColumn(name="miscelaneo_id", nullable=false)
+    private Miscelaneo miscelaneo;
 
     @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="factura_id", nullable=false)
     private Factura factura;
 
-    public DetalleCompraMedicamento() {
+    public DetalleCompraMiscelaneo() {
     }
 
-    public DetalleCompraMedicamento(Integer cantidad, Float precio, Medicamento medicamento, Factura factura) {
+    public DetalleCompraMiscelaneo(Integer cantidad, Float precio, Miscelaneo miscelaneo, Factura factura) {
         this.cantidad = cantidad;
         this.precio = precio;
-        this.medicamento = medicamento;
+        this.miscelaneo = miscelaneo;
         this.factura = factura;
     }
 
@@ -47,8 +46,8 @@ public class DetalleCompraMedicamento {
         return precio;
     }
 
-    public Medicamento getMedicamento() {
-        return medicamento;
+    public Miscelaneo getMiscelaneo() {
+        return miscelaneo;
     }
 
     public Factura getFactura() {

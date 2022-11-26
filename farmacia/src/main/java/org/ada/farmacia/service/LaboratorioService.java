@@ -48,7 +48,7 @@ public class LaboratorioService {
     public LaboratorioDTO retrieveById(Integer id){
         Optional<Laboratorio> laboratorio= laboratorioRepository.findById(id);
         if(laboratorio.isEmpty()){
-            throw new ResourceNotFoundException();
+            throw new ResourceNotFoundException("El laboratorio consultado no existe.");
         }
         return mapToDTO(laboratorio.get());
     }
@@ -56,14 +56,14 @@ public class LaboratorioService {
     public LaboratorioDTO retrieveByNombre(String nombre){
         Optional<Laboratorio> laboratorio= laboratorioRepository.findByNombre(nombre);
         if(laboratorio.isEmpty()){
-            throw new ResourceNotFoundException();
+            throw new ResourceNotFoundException("El laboratorio consultado no existe.");
         }
         return mapToDTO(laboratorio.get());
     }
 
     private void checkForExistingLaboratorio(String nombre){
         if (laboratorioRepository.findByNombre(nombre).isPresent()) {
-            throw new ExistingResourceException();
+            throw new ExistingResourceException("El laboratorio que se está intentando crear, ya existe.");
         }
     }
 

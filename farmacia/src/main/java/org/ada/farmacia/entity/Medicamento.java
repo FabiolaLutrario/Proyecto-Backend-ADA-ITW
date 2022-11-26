@@ -39,6 +39,9 @@ public class Medicamento {
     @JoinColumn(name="laboratorio_id")
     private Laboratorio laboratorio;
 
+    @OneToMany(mappedBy = "medicamento", fetch = FetchType.EAGER)
+    private List<DetalleCompraMedicamento> detalleCompraMedicamentos;
+
     public Medicamento(){
 
     }

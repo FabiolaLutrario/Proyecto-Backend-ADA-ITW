@@ -46,7 +46,7 @@ public class MedicamentoService {
     public MedicamentoDTO retrieveById(String id){
         Optional<Medicamento> medicamento= medicamentoRepository.findById(id);
         if(medicamento.isEmpty()){
-            throw new ResourceNotFoundException();
+            throw new ResourceNotFoundException("El medicamento que está intentando consultar no existe.");
         }
         return mapToDTO(medicamento.get());
     }
@@ -54,7 +54,7 @@ public class MedicamentoService {
     public List<MedicamentoDTO> retrieveByNombreComercial(String nombreComercial){
         List<Medicamento> medicamentos = medicamentoRepository.findByNombreComercial(nombreComercial);
         if(medicamentos.isEmpty()){
-            throw new ResourceNotFoundException();
+            throw new ResourceNotFoundException("El medicamento que está intentando consultar no existe.");
         }
         return medicamentos.stream()
                 .map(medicamento -> mapToDTO(medicamento))
@@ -64,7 +64,7 @@ public class MedicamentoService {
     public List<MedicamentoDTO> retrieveByNombreGenerico(String nombreGenerico){
         List<Medicamento> medicamentos = medicamentoRepository.findByNombreGenerico(nombreGenerico);
         if(medicamentos.isEmpty()){
-            throw new ResourceNotFoundException();
+            throw new ResourceNotFoundException("El medicamento que está intentando consultar no existe.");
         }
         return medicamentos.stream()
                 .map(medicamento -> mapToDTO(medicamento))
@@ -73,7 +73,7 @@ public class MedicamentoService {
 
     private void checkForExistingMedicamento(String medicamentoId){
         if (medicamentoRepository.existsById(medicamentoId)) {
-            throw new ExistingResourceException();
+            throw new ExistingResourceException("El medicamento que se está intentando crear, ya existe.");
         }
     }
 

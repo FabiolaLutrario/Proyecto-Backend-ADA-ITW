@@ -2,21 +2,21 @@ package org.ada.farmacia.dto;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 
-public class DetalleCompraMedicamentoDTO {
+public class DetalleCompraMiscelaneoDTO {
 
     private Integer id;
-    @JsonAlias("id_medicamento")
-    private String idMedicamento;
     private Integer cantidad;
     private Float precio;
+    @JsonAlias("id_miscelaneo")
+    private String idMiscelaneo;
 
-    public DetalleCompraMedicamentoDTO() {
+    public DetalleCompraMiscelaneoDTO() {
     }
 
-    public DetalleCompraMedicamentoDTO(String idMedicamento, Integer cantidad, Float precio) {
-        this.idMedicamento = idMedicamento;
+    public DetalleCompraMiscelaneoDTO(Integer cantidad, Float precio, String idMiscelaneo) {
         this.cantidad = cantidad;
         this.precio = precio;
+        this.idMiscelaneo = idMiscelaneo;
     }
 
     public void setId(Integer id) {
@@ -27,15 +27,15 @@ public class DetalleCompraMedicamentoDTO {
         return id;
     }
 
-    public String getIdMedicamento() {
-        return idMedicamento;
-    }
-
     public Integer getCantidad() {
         return cantidad;
     }
 
     public Float getPrecio() {
         return precio;
+    }
+
+    public String getIdMiscelaneo() {
+        return idMiscelaneo;
     }
 }
