@@ -13,25 +13,40 @@ public class DetalleCompraMiscelaneo {
     @Column(nullable=false)
     private Integer cantidad;
 
-    @Column(nullable=false)
-    private Float precio;
+    @Column(name="precio_unitario", nullable=false)
+    private Double precioUnitario;
 
-    @ManyToOne(fetch=FetchType.EAGER)
-    @JoinColumn(name="miscelaneo_id", nullable=false)
-    private Miscelaneo miscelaneo;
+    @Column(name="precio_total", nullable=false)
+    private Double precioTotal;
 
     @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="factura_id", nullable=false)
     private Factura factura;
 
+    @ManyToOne(fetch=FetchType.EAGER)
+    @JoinColumn(name="miscelaneo_id", nullable=false)
+    private Miscelaneo miscelaneo;
+
     public DetalleCompraMiscelaneo() {
     }
 
-    public DetalleCompraMiscelaneo(Integer cantidad, Float precio, Miscelaneo miscelaneo, Factura factura) {
+    public DetalleCompraMiscelaneo(Integer cantidad, Miscelaneo miscelaneo) {
         this.cantidad = cantidad;
-        this.precio = precio;
+        this.miscelaneo = miscelaneo;
+    }
+
+    public DetalleCompraMiscelaneo(Integer cantidad, Miscelaneo miscelaneo, Factura factura) {
+        this.cantidad = cantidad;
         this.miscelaneo = miscelaneo;
         this.factura = factura;
+    }
+
+    public void setPrecioUnitario(Double precioUnitario) {
+        this.precioUnitario = precioUnitario;
+    }
+
+    public void setPrecioTotal(Double precioTotal) {
+        this.precioTotal = precioTotal;
     }
 
     public Integer getId() {
@@ -42,15 +57,19 @@ public class DetalleCompraMiscelaneo {
         return cantidad;
     }
 
-    public Float getPrecio() {
-        return precio;
-    }
-
     public Miscelaneo getMiscelaneo() {
         return miscelaneo;
     }
 
     public Factura getFactura() {
         return factura;
+    }
+
+    public Double getPrecioUnitario() {
+        return precioUnitario;
+    }
+
+    public Double getPrecioTotal() {
+        return precioTotal;
     }
 }

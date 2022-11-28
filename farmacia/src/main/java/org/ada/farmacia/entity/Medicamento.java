@@ -3,6 +3,7 @@ package org.ada.farmacia.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -15,7 +16,7 @@ public class Medicamento {
     @Column(name="nombre_comercial",nullable=false)
     private String nombreComercial;
 
-    @Column(name="nombre_generico")
+    @Column(name="nombre_generico",nullable=false)
     private String nombreGenerico;
 
     @Column(nullable=false)
@@ -28,7 +29,10 @@ public class Medicamento {
     private String dosis;
 
     @Column(name="precio_compra",nullable=false)
-    private Float precioCompra;
+    private Double precioCompra;
+
+    @Column(name="precio_venta",nullable=false)
+    private Double precioVenta;
 
     @Column(nullable=false)
     private Integer stock;
@@ -39,14 +43,13 @@ public class Medicamento {
     @JoinColumn(name="laboratorio_id")
     private Laboratorio laboratorio;
 
-    @OneToMany(mappedBy = "medicamento", fetch = FetchType.EAGER)
+    @OneToMany(fetch=FetchType.LAZY, mappedBy = "medicamento")
     private List<DetalleCompraMedicamento> detalleCompraMedicamentos;
 
     public Medicamento(){
-
     }
 
-    public Medicamento(String id, String nombreComercial, String nombreGenerico, String presentacion, String principioActivo, String dosis, Float precioCompra, Integer stock, Laboratorio laboratorio) {
+    public Medicamento(String id, String nombreComercial, String nombreGenerico, String presentacion, String principioActivo, String dosis, Double precioCompra, Integer stock, Laboratorio laboratorio) {
         this.id = id;
         this.nombreComercial = nombreComercial;
         this.nombreGenerico = nombreGenerico;
@@ -55,6 +58,56 @@ public class Medicamento {
         this.dosis = dosis;
         this.precioCompra = precioCompra;
         this.stock = stock;
+        this.laboratorio = laboratorio;
+    }
+
+    public Medicamento(String id, String nombreComercial, String nombreGenerico, String presentacion, String principioActivo, String dosis, Double precioCompra, Integer stock, Laboratorio laboratorio, List<DetalleCompraMedicamento> detalleCompraMedicamentos) {
+        this.id = id;
+        this.nombreComercial = nombreComercial;
+        this.nombreGenerico = nombreGenerico;
+        this.presentacion = presentacion;
+        this.principioActivo = principioActivo;
+        this.dosis = dosis;
+        this.precioCompra = precioCompra;
+        this.stock = stock;
+        this.laboratorio = laboratorio;
+        this.detalleCompraMedicamentos = detalleCompraMedicamentos;
+    }
+
+
+    public void setNombreComercial(String nombreComercial) {
+        this.nombreComercial = nombreComercial;
+    }
+
+    public void setNombreGenerico(String nombreGenerico) {
+        this.nombreGenerico = nombreGenerico;
+    }
+
+    public void setPresentacion(String presentacion) {
+        this.presentacion = presentacion;
+    }
+
+    public void setPrincipioActivo(String principioActivo) {
+        this.principioActivo = principioActivo;
+    }
+
+    public void setDosis(String dosis) {
+        this.dosis = dosis;
+    }
+
+    public void setPrecioCompra(Double precioCompra) {
+        this.precioCompra = precioCompra;
+    }
+
+    public void setPrecioVenta(Double precioVenta) {
+        this.precioVenta = precioVenta;
+    }
+
+    public void setStock(Integer stock) {
+        this.stock = stock;
+    }
+
+    public void setLaboratorio(Laboratorio laboratorio) {
         this.laboratorio = laboratorio;
     }
 
@@ -82,8 +135,12 @@ public class Medicamento {
         return dosis;
     }
 
-    public Float getPrecioCompra() {
+    public Double getPrecioCompra() {
         return precioCompra;
+    }
+
+    public Double getPrecioVenta() {
+        return precioVenta;
     }
 
     public Integer getStock() {
@@ -92,5 +149,43 @@ public class Medicamento {
 
     public Laboratorio getLaboratorio() {
         return laboratorio;
+    }
+
+    public List<DetalleCompraMedicamento> getDetalleCompraMedicamentos() {
+        if(detalleCompraMedicamentos==null) {
+            detalleCompraMedicamentos=new ArrayList<>();
+        }
+        return detalleCompraMedicamentos;
+    }
+
+
+
+    public void modifyAttributeValue(String attributeName, Object newValue) {
+        switch (attributeName) {
+            case "nombre_comercial":
+                this.nombreComercial = (String) newValue;
+                break;
+            case "nombre_generico":
+                this.nombreGenerico = (String) newValue;
+                break;
+            case "presentacion":
+                this.presentacion = (String) newValue;
+                break;
+            case "principio_activo":
+                this.principioActivo = (String) newValue;
+                break;
+            case "dosis":
+                this.dosis = (String) newValue;
+                break;
+            case "precio_compra":
+                this.precioCompra = (Double) newValue;
+                break;
+            case "stock":
+                this.stock = (Integer) newValue;
+                break;
+            case "laboratorio_id":
+                this.laboratorio = (Laboratorio) newValue;
+                break;
+        }
     }
 }

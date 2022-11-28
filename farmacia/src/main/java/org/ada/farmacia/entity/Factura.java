@@ -18,56 +18,82 @@ public class Factura {
     private LocalDate fecha;
 
     @Column(nullable=false)
-    private Float impuesto;
+    private Double totalVenta;
 
     @Column(nullable=false)
-    private Float totalVenta;
+    private Double impuesto;
 
     private String estado;
 
-    @OneToMany(mappedBy = "factura",fetch=FetchType.EAGER,cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "factura",cascade = CascadeType.REMOVE)
     private List<DetalleCompraMedicamento> detalleCompraMedicamentos;
 
-    @OneToMany(mappedBy = "factura",fetch=FetchType.EAGER,cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "factura",cascade = CascadeType.REMOVE)
     private List<DetalleCompraMiscelaneo> detalleCompraMiscelaneos;
 
     @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="client_id")
+    @JoinColumn(name="cliente_id")
     private Cliente cliente;
 
     public Factura() {
     }
 
-    public Factura(Integer id, LocalDate fecha, Float impuesto, Float totalVenta, List<DetalleCompraMedicamento> detalleCompraMedicamentos) {
-        this.id = id;
+    public Factura(Integer id, LocalDate fecha, List<DetalleCompraMedicamento> detalleCompraMedicamentos) {
         this.fecha = fecha;
-        this.impuesto = impuesto;
-        this.totalVenta = totalVenta;
         this.detalleCompraMedicamentos = detalleCompraMedicamentos;
     }
 
-    public Factura(Integer id, LocalDate fecha, Float impuesto, Float totalVenta, String estado, List<DetalleCompraMedicamento> detalleCompraMedicamentos) {
-        this.id = id;
+    public Factura(LocalDate fecha, Cliente cliente) {
         this.fecha = fecha;
-        this.impuesto = impuesto;
-        this.totalVenta = totalVenta;
+        this.cliente = cliente;
+    }
+
+    public Factura(LocalDate fecha, String estado, Cliente cliente) {
+        this.fecha = fecha;
+        this.estado = estado;
+        this.cliente = cliente;
+    }
+
+    public Factura(LocalDate fecha, String estado, List<DetalleCompraMedicamento> detalleCompraMedicamentos) {
+        this.fecha = fecha;
         this.estado = estado;
         this.detalleCompraMedicamentos = detalleCompraMedicamentos;
     }
 
-    public Factura(Integer id, LocalDate fecha, Float impuesto, Float totalVenta, String estado) {
-        this.id = id;
+    public Factura(LocalDate fecha, String estado, List<DetalleCompraMiscelaneo> detalleCompraMiscelaneos, Cliente cliente) {
         this.fecha = fecha;
-        this.impuesto = impuesto;
-        this.totalVenta = totalVenta;
         this.estado = estado;
+        this.detalleCompraMiscelaneos = detalleCompraMiscelaneos;
+        this.cliente = cliente;
     }
 
-    public Factura(Integer id, LocalDate fecha, Float impuesto, Float totalVenta) {
-        this.id = id;
+    public Factura(LocalDate fecha, List<DetalleCompraMiscelaneo> detalleCompraMiscelaneos, Cliente cliente) {
         this.fecha = fecha;
-        this.impuesto = impuesto;
+        this.detalleCompraMiscelaneos = detalleCompraMiscelaneos;
+        this.cliente = cliente;
+    }
+
+    public Factura(LocalDate fecha, String estado, List<DetalleCompraMedicamento> detalleCompraMedicamentos, List<DetalleCompraMiscelaneo> detalleCompraMiscelaneos, Cliente cliente) {
+        this.fecha = fecha;
+        this.estado = estado;
+        this.detalleCompraMedicamentos = detalleCompraMedicamentos;
+        this.detalleCompraMiscelaneos = detalleCompraMiscelaneos;
+        this.cliente = cliente;
+    }
+
+    public Factura(LocalDate fecha, List<DetalleCompraMedicamento> detalleCompraMedicamentos, List<DetalleCompraMiscelaneo> detalleCompraMiscelaneos, Cliente cliente) {
+        this.fecha = fecha;
+        this.detalleCompraMedicamentos = detalleCompraMedicamentos;
+        this.detalleCompraMiscelaneos = detalleCompraMiscelaneos;
+        this.cliente = cliente;
+    }
+
+    public void setTotalVenta(Double totalVenta) {
         this.totalVenta = totalVenta;
+    }
+
+    public void setImpuesto(Double impuesto) {
+        this.impuesto = impuesto;
     }
 
     public Integer getId() {
@@ -78,16 +104,20 @@ public class Factura {
         return fecha;
     }
 
-    public Float getImpuesto() {
-        return impuesto;
+    public Double getTotalVenta() {
+        return totalVenta;
     }
 
-    public Float getTotalVenta() {
-        return totalVenta;
+    public Double getImpuesto() {
+        return impuesto;
     }
 
     public String getEstado() {
         return estado;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
     }
 
     public List<DetalleCompraMedicamento> getDetalleCompraMedicamentos() {
@@ -95,5 +125,12 @@ public class Factura {
             detalleCompraMedicamentos=new ArrayList<>();
         }
         return detalleCompraMedicamentos;
+    }
+
+    public List<DetalleCompraMiscelaneo> getDetalleCompraMiscelaneos() {
+        if(detalleCompraMiscelaneos==null) {
+            detalleCompraMiscelaneos=new ArrayList<>();
+        }
+        return detalleCompraMiscelaneos;
     }
 }

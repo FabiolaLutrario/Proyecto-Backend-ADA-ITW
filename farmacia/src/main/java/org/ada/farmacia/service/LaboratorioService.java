@@ -1,17 +1,19 @@
 package org.ada.farmacia.service;
 
-import com.sun.jdi.IntegerValue;
 import org.ada.farmacia.dto.LaboratorioDTO;
-import org.ada.farmacia.dto.MedicamentoDTO;
 import org.ada.farmacia.entity.Laboratorio;
-import org.ada.farmacia.entity.Medicamento;
 import org.ada.farmacia.exceptions.ExistingResourceException;
+import org.ada.farmacia.exceptions.ResourceNotDeletedException;
 import org.ada.farmacia.exceptions.ResourceNotFoundException;
 import org.ada.farmacia.repository.LaboratorioRepository;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -30,6 +32,7 @@ public class LaboratorioService {
         Laboratorio laboratorio = mapToEntity(laboratorioDTO);
         checkForExistingLaboratorio(laboratorio.getNombre());
         laboratorio= laboratorioRepository.save(laboratorio);
+        laboratorioDTO.setId(laboratorio.getId());
         if(!CollectionUtils.isEmpty(laboratorioDTO.getMedicamentoDTOS())){
             medicamentoService.create(laboratorioDTO.getMedicamentoDTOS(), laboratorio);
             //Crea un laboratorio desde 0 con una lista de medicamentos asociados.
@@ -59,6 +62,26 @@ public class LaboratorioService {
             throw new ResourceNotFoundException("El laboratorio consultado no existe.");
         }
         return mapToDTO(laboratorio.get());
+    }
+
+    public void delete(Integer laboratorioId) {
+        try {
+            laboratorioRepository.deleteById(laboratorioId);
+        } catch (EmptyResultDataAccessException e) {
+            throw new ResourceNotFoundException("El laboratorio que está intentando eliminar no existe.");
+        } catch (DataIntegrityViolationException e){
+            throw  new ResourceNotDeletedException("No se puede eliminar el laboratorio porque tiene medicamentos asociados.");
+        }
+    }
+
+    public void replace(Integer laboratorioId, LaboratorioDTO laboratorioDTO) {
+        Optional<Laboratorio> laboratorio = laboratorioRepository.findById(laboratorioId);
+        if (laboratorio.isEmpty()) {
+            throw new ResourceNotFoundException("El laboratorio que se está intentando modificar, no existe.");
+        }
+        Laboratorio laboratorioToReplace = laboratorio.get();
+        laboratorioToReplace.setNombre (laboratorioDTO.getNombre());
+        laboratorioRepository.save(laboratorioToReplace);
     }
 
     private void checkForExistingLaboratorio(String nombre){

@@ -9,47 +9,39 @@ public class FacturaDTO {
 
     private Integer id;
     private String fecha;
+    @JsonAlias("cliente_id")
     private String idCliente;
-    private Float impuesto;
+    private Double impuesto;
     @JsonAlias("total_venta")
-    private Float totalVenta;
+    private Double totalVenta;
     private String estado;
-    @JsonAlias("detalle_compra_medicamentos")
+    @JsonAlias("detalle_compra_medicamento")
     private List<DetalleCompraMedicamentoDTO> detalleCompraMedicamentoDTOS;
+    @JsonAlias("detalle_compra_miscelaneo")
+    private List<DetalleCompraMiscelaneoDTO> detalleCompraMiscelaneoDTOS;
 
     public FacturaDTO() {
     }
 
-    public FacturaDTO(Float impuesto, Float totalVenta, List<DetalleCompraMedicamentoDTO> detalleCompraMedicamentoDTOS) {
-        this.impuesto = impuesto;
-        this.totalVenta = totalVenta;
-        this.detalleCompraMedicamentoDTOS = detalleCompraMedicamentoDTOS;
-    }
-
-    public FacturaDTO(Float impuesto, Float totalVenta, String estado, List<DetalleCompraMedicamentoDTO> detalleCompraMedicamentoDTOS) {
-        this.impuesto = impuesto;
-        this.totalVenta = totalVenta;
-        this.estado = estado;
-        this.detalleCompraMedicamentoDTOS = detalleCompraMedicamentoDTOS;
-    }
-
-    public FacturaDTO(Integer id, String fecha, String idCliente, Float impuesto, Float totalVenta, String estado, List<DetalleCompraMedicamentoDTO> detalleCompraMedicamentoDTOS) {
-        this.id = id;
+    public FacturaDTO(String fecha, String idCliente, String estado, List<DetalleCompraMedicamentoDTO> detalleCompraMedicamentoDTOS, List<DetalleCompraMiscelaneoDTO> detalleCompraMiscelaneoDTOS) {
         this.fecha = fecha;
         this.idCliente = idCliente;
-        this.impuesto = impuesto;
-        this.totalVenta = totalVenta;
         this.estado = estado;
         this.detalleCompraMedicamentoDTOS = detalleCompraMedicamentoDTOS;
+        this.detalleCompraMiscelaneoDTOS = detalleCompraMiscelaneoDTOS;
     }
 
-    public FacturaDTO(Integer id, String fecha, String idCliente, Float impuesto, Float totalVenta, List<DetalleCompraMedicamentoDTO> detalleCompraMedicamentoDTOS) {
-        this.id = id;
+    public FacturaDTO(String fecha, String idCliente, List<DetalleCompraMedicamentoDTO> detalleCompraMedicamentoDTOS, List<DetalleCompraMiscelaneoDTO> detalleCompraMiscelaneoDTOS) {
         this.fecha = fecha;
         this.idCliente = idCliente;
-        this.impuesto = impuesto;
-        this.totalVenta = totalVenta;
         this.detalleCompraMedicamentoDTOS = detalleCompraMedicamentoDTOS;
+        this.detalleCompraMiscelaneoDTOS = detalleCompraMiscelaneoDTOS;
+    }
+
+    public FacturaDTO(String fecha, List<DetalleCompraMedicamentoDTO> detalleCompraMedicamentoDTOS, List<DetalleCompraMiscelaneoDTO> detalleCompraMiscelaneoDTOS) {
+        this.fecha = fecha;
+        this.detalleCompraMedicamentoDTOS = detalleCompraMedicamentoDTOS;
+        this.detalleCompraMiscelaneoDTOS = detalleCompraMiscelaneoDTOS;
     }
 
     public void setId(Integer id) {
@@ -58,6 +50,14 @@ public class FacturaDTO {
 
     public void setFecha(String fecha) {
         this.fecha = fecha;
+    }
+
+    public void setImpuesto(Double impuesto) {
+        this.impuesto = impuesto;
+    }
+
+    public void setTotalVenta(Double totalVenta) {
+        this.totalVenta = totalVenta;
     }
 
     public Integer getId() {
@@ -72,11 +72,11 @@ public class FacturaDTO {
         return idCliente;
     }
 
-    public Float getImpuesto() {
+    public Double getImpuesto() {
         return impuesto;
     }
 
-    public Float getTotalVenta() {
+    public Double getTotalVenta() {
         return totalVenta;
     }
 
@@ -86,5 +86,9 @@ public class FacturaDTO {
 
     public List<DetalleCompraMedicamentoDTO> getDetalleCompraMedicamentoDTOS() {
         return detalleCompraMedicamentoDTOS;
+    }
+
+    public List<DetalleCompraMiscelaneoDTO> getDetalleCompraMiscelaneoDTOS() {
+        return detalleCompraMiscelaneoDTOS;
     }
 }

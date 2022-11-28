@@ -1,7 +1,6 @@
 package org.ada.farmacia.dto;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
-import org.ada.farmacia.entity.Laboratorio;
 
 import java.util.List;
 
@@ -17,14 +16,21 @@ public class MedicamentoDTO {
     private String principioActivo;
     private String dosis;
     @JsonAlias("precio_compra")
-    private Float precioCompra;
+    private Double precioCompra;
+    @JsonAlias("precio_venta")
+    private Double precioVenta;
     private Integer stock;
-    private String laboratorio;
+    @JsonAlias("detalle_compra_medicamento")
+    private List<DetalleCompraMedicamentoDTO> detalleCompraMedicamentoDTOS;
+    @JsonAlias("nombre_laboratorio")
+    private String nombreLaboratorio;
+    @JsonAlias("laboratorio_id")
+    private Integer laboratorioId;
 
     public MedicamentoDTO() {
     }
 
-    public MedicamentoDTO(String id, String nombreComercial, String nombreGenerico, String presentacion, String principioActivo, String dosis, Float precioCompra, Integer stock) {
+    public MedicamentoDTO(String id, String nombreComercial, String nombreGenerico, String presentacion, String principioActivo, String dosis, Double precioCompra, Integer stock) {
         this.id = id;
         this.nombreComercial = nombreComercial;
         this.nombreGenerico = nombreGenerico;
@@ -35,7 +41,7 @@ public class MedicamentoDTO {
         this.stock = stock;
     }
 
-    public MedicamentoDTO(String id, String nombreComercial, String nombreGenerico, String presentacion, String principioActivo, String dosis, Float precioCompra, Integer stock, String laboratorio) {
+    public MedicamentoDTO(String id, String nombreComercial, String nombreGenerico, String presentacion, String principioActivo, String dosis, Double precioCompra, Integer stock, List<DetalleCompraMedicamentoDTO> detalleCompraMedicamentoDTOS) {
         this.id = id;
         this.nombreComercial = nombreComercial;
         this.nombreGenerico = nombreGenerico;
@@ -44,7 +50,48 @@ public class MedicamentoDTO {
         this.dosis = dosis;
         this.precioCompra = precioCompra;
         this.stock = stock;
-        this.laboratorio = laboratorio;
+        this.detalleCompraMedicamentoDTOS = detalleCompraMedicamentoDTOS;
+    }
+
+    public MedicamentoDTO(String id, String nombreComercial, String nombreGenerico, String presentacion, String principioActivo, String dosis, Double precioCompra, Integer stock, List<DetalleCompraMedicamentoDTO> detalleCompraMedicamentoDTOS, String nombreLaboratorio) {
+        this.id = id;
+        this.nombreComercial = nombreComercial;
+        this.nombreGenerico = nombreGenerico;
+        this.presentacion = presentacion;
+        this.principioActivo = principioActivo;
+        this.dosis = dosis;
+        this.precioCompra = precioCompra;
+        this.stock = stock;
+        this.detalleCompraMedicamentoDTOS = detalleCompraMedicamentoDTOS;
+        this.nombreLaboratorio = nombreLaboratorio;
+    }
+
+    public MedicamentoDTO(String id, String nombreComercial, String nombreGenerico, String presentacion, String principioActivo, String dosis, Double precioCompra, Integer stock, String nombreLaboratorio) {
+        this.id = id;
+        this.nombreComercial = nombreComercial;
+        this.nombreGenerico = nombreGenerico;
+        this.presentacion = presentacion;
+        this.principioActivo = principioActivo;
+        this.dosis = dosis;
+        this.precioCompra = precioCompra;
+        this.stock = stock;
+        this.nombreLaboratorio = nombreLaboratorio;
+    }
+
+    public MedicamentoDTO(String id, String nombreComercial, String nombreGenerico, String presentacion, String principioActivo, String dosis, Double precioCompra, Integer stock, Integer laboratorioId) {
+        this.id = id;
+        this.nombreComercial = nombreComercial;
+        this.nombreGenerico = nombreGenerico;
+        this.presentacion = presentacion;
+        this.principioActivo = principioActivo;
+        this.dosis = dosis;
+        this.precioCompra = precioCompra;
+        this.stock = stock;
+        this.laboratorioId = laboratorioId;
+    }
+
+    public void setPrecioVenta(Double precioVenta) {
+        this.precioVenta = precioVenta;
     }
 
     public String getId() {
@@ -71,7 +118,7 @@ public class MedicamentoDTO {
         return dosis;
     }
 
-    public Float getPrecioCompra() {
+    public Double getPrecioCompra() {
         return precioCompra;
     }
 
@@ -79,7 +126,15 @@ public class MedicamentoDTO {
         return stock;
     }
 
-    public String getLaboratorio() {
-        return laboratorio;
+    public String getNombreLaboratorio() {
+        return nombreLaboratorio;
+    }
+
+    public Integer getLaboratorioId() {
+        return laboratorioId;
+    }
+
+    public List<DetalleCompraMedicamentoDTO> getDetalleCompraMedicamentoDTOS() {
+        return detalleCompraMedicamentoDTOS;
     }
 }

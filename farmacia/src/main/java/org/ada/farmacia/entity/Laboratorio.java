@@ -31,6 +31,10 @@ public class Laboratorio {
         this.medicamentos = medicamentos;
     }
 
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
     public Integer getId() {
         return id;
     }

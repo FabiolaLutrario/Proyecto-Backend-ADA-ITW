@@ -13,26 +13,41 @@ public class DetalleCompraMedicamento {
     @Column(nullable=false)
     private Integer cantidad;
 
-    @Column(nullable=false)
-    private Float precio;
+    @Column(name="precio_unitario", nullable=false)
+    private Double precioUnitario;
+
+    @Column(name="precio_total", nullable=false)
+    private Double precioTotal;
+
+    @ManyToOne(fetch=FetchType.EAGER)
+    @JoinColumn(name="factura_id", nullable=false)
+    private Factura factura;
 
     @ManyToOne(fetch=FetchType.EAGER)//Carga el medicamento asociados a los detalles de compra
     //cada vez que se consulten los detalles de compra asociados al medicamento.
     @JoinColumn(name="medicamento_id", nullable=false)
     private Medicamento medicamento;
 
-    @ManyToOne(fetch=FetchType.EAGER)
-    @JoinColumn(name="factura_id", nullable=false)
-    private Factura factura;
-
     public DetalleCompraMedicamento() {
     }
 
-    public DetalleCompraMedicamento(Integer cantidad, Float precio, Medicamento medicamento, Factura factura) {
+    public DetalleCompraMedicamento(Integer cantidad, Medicamento medicamento, Factura factura) {
         this.cantidad = cantidad;
-        this.precio = precio;
         this.medicamento = medicamento;
         this.factura = factura;
+    }
+
+    public DetalleCompraMedicamento(Integer cantidad, Medicamento medicamento) {
+        this.cantidad = cantidad;
+        this.medicamento = medicamento;
+    }
+
+    public void setPrecioUnitario(Double precioUnitario) {
+        this.precioUnitario = precioUnitario;
+    }
+
+    public void setPrecioTotal(Double precioTotal) {
+        this.precioTotal = precioTotal;
     }
 
     public Integer getId() {
@@ -43,15 +58,19 @@ public class DetalleCompraMedicamento {
         return cantidad;
     }
 
-    public Float getPrecio() {
-        return precio;
-    }
-
     public Medicamento getMedicamento() {
         return medicamento;
     }
 
     public Factura getFactura() {
         return factura;
+    }
+
+    public Double getPrecioUnitario() {
+        return precioUnitario;
+    }
+
+    public Double getPrecioTotal() {
+        return precioTotal;
     }
 }

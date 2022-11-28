@@ -21,4 +21,11 @@ public class ControllerExceptionHandler {
         return new ResponseEntity(ResourceNotFoundException.MESSAGE,
                 HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(ResourceNotDeletedException.class)
+    public ResponseEntity handleException(ResourceNotDeletedException e){
+
+        return new ResponseEntity(ResourceNotDeletedException.MESSAGE,
+                HttpStatus.CONFLICT);
+    }
 }

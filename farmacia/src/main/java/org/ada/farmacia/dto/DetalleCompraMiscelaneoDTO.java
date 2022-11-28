@@ -5,22 +5,40 @@ import com.fasterxml.jackson.annotation.JsonAlias;
 public class DetalleCompraMiscelaneoDTO {
 
     private Integer id;
-    private Integer cantidad;
-    private Float precio;
-    @JsonAlias("id_miscelaneo")
+    @JsonAlias("miscelaneo_id")
     private String idMiscelaneo;
+    @JsonAlias("factura_id")
+    private Integer idFactura;
+    private Integer cantidad;
+    @JsonAlias("precio_unitario")
+    private Double precioUnitario;
+    @JsonAlias("precio_total")
+    private Double precioTotal;
 
     public DetalleCompraMiscelaneoDTO() {
     }
 
-    public DetalleCompraMiscelaneoDTO(Integer cantidad, Float precio, String idMiscelaneo) {
-        this.cantidad = cantidad;
-        this.precio = precio;
+    public DetalleCompraMiscelaneoDTO(String idMiscelaneo, Integer cantidad) {
         this.idMiscelaneo = idMiscelaneo;
+        this.cantidad = cantidad;
+    }
+
+    public DetalleCompraMiscelaneoDTO(String idMiscelaneo, Integer idFactura, Integer cantidad) {
+        this.idMiscelaneo = idMiscelaneo;
+        this.idFactura = idFactura;
+        this.cantidad = cantidad;
     }
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public void setPrecioUnitario(Double precioUnitario) {
+        this.precioUnitario = precioUnitario;
+    }
+
+    public void setPrecioTotal(Double precioTotal) {
+        this.precioTotal = precioTotal;
     }
 
     public Integer getId() {
@@ -29,10 +47,6 @@ public class DetalleCompraMiscelaneoDTO {
 
     public Integer getCantidad() {
         return cantidad;
-    }
-
-    public Float getPrecio() {
-        return precio;
     }
 
     public String getIdMiscelaneo() {

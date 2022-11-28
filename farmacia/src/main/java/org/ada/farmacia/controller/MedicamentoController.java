@@ -11,9 +11,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RestController
-@RequestMapping("/medicamentos")
+@RequestMapping("/laboratorios/{laboratorioId}/medicamentos")
 public class MedicamentoController {
 
     private final MedicamentoService medicamentoService;
@@ -23,17 +24,12 @@ public class MedicamentoController {
         this.medicamentoService = medicamentoService;
     }
 
-    @PostMapping
-    public ResponseEntity create(@RequestBody List<MedicamentoDTO> medicamentoDTOS, Laboratorio laboratorio){
-        List<MedicamentoDTO> createdMedicamentoDTOS = medicamentoService.create(medicamentoDTOS, laboratorio);
+    @PostMapping()
+    public ResponseEntity create(@PathVariable Integer laboratorioId,
+                                 @RequestBody MedicamentoDTO medicamentoDTO){
+        medicamentoService.create(medicamentoDTO, laboratorioId);
 
-        List <String> medicamentosById = new ArrayList<>();
-
-        for (MedicamentoDTO medicamentoDTO: medicamentoDTOS) {
-            medicamentosById.add(medicamentoDTO.getId());
-        }
-
-        return new ResponseEntity(medicamentosById, HttpStatus.CREATED);
+        return new ResponseEntity(medicamentoDTO.getId(), HttpStatus.CREATED);
     }
 
     @GetMapping
@@ -42,22 +38,45 @@ public class MedicamentoController {
 
     }
 
-    @GetMapping("/medicamentoId/{id}")
-    public ResponseEntity retrieveById(@PathVariable String id){
-        MedicamentoDTO medicamentoDTO = medicamentoService.retrieveById(id);
+    @GetMapping("/medicamentoId/{medicamentoId}")
+    public ResponseEntity retrieveById(@PathVariable String medicamentoId){
+        MedicamentoDTO medicamentoDTO = medicamentoService.retrieveById(medicamentoId);
 
         return new ResponseEntity(medicamentoDTO, HttpStatus.OK);
     }
 
-    @GetMapping("/medicamentoNombreComercial/{nombreComercial}")
-    public ResponseEntity retrieveByNombreComercial(@PathVariable String nombreComercial){
+    @GetMapping("/medicamentoNombreComercial/{medicamentoNombreComercial}")
+    public ResponseEntity retrieveByNombreComercial(@PathVariable String medicamentoNombreComercial){
 
-        return new ResponseEntity(medicamentoService.retrieveByNombreComercial(nombreComercial), HttpStatus.OK);
+        return new ResponseEntity(medicamentoService.retrieveByNombreComercial(medicamentoNombreComercial), HttpStatus.OK);
     }
 
-    @GetMapping("/medicamentoNombreGenerico/{nombreGenerico}")
-    public ResponseEntity retrieveByNombreGenerico(@PathVariable String nombreGenerico){
+    @GetMapping("/medicamentoNombreGenerico/{medicamentoNombreGenerico}")
+    public ResponseEntity retrieveByNombreGenerico(@PathVariable String medicamentoNombreGenerico){
 
-        return new ResponseEntity(medicamentoService.retrieveByNombreGenerico(nombreGenerico), HttpStatus.OK);
+        return new ResponseEntity(medicamentoService.retrieveByNombreGenerico(medicamentoNombreGenerico), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{medicamentoId}")
+    public ResponseEntity delete(@PathVariable String medicamentoId){
+        medicamentoService.delete(medicamentoId);
+
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @PutMapping("/{medicamentoId}")
+    public ResponseEntity replace(@PathVariable String medicamentoId,
+                                  @RequestBody MedicamentoDTO medicamentoDTO) {
+        medicamentoService.replace(medicamentoId, medicamentoDTO);
+
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @PatchMapping("/{medicamentoId}")
+    public ResponseEntity modify(@PathVariable String medicamentoId,
+                                 @RequestBody Map<String, Object> fieldsToModify) {
+        medicamentoService.modify(medicamentoId, fieldsToModify);
+
+        return new ResponseEntity(HttpStatus.OK);
     }
 }

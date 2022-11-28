@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping(path="/laboratorios")
 public class LaboratorioController {
@@ -21,7 +23,7 @@ public class LaboratorioController {
     public ResponseEntity create(@RequestBody LaboratorioDTO laboratorioDTO){
         LaboratorioDTO createdLaboratorioDTO = laboratorioService.create(laboratorioDTO);
 
-        return new ResponseEntity(laboratorioDTO.getNombre(), HttpStatus.CREATED);
+        return new ResponseEntity(laboratorioDTO.getId(), HttpStatus.CREATED);
     }
 
     @GetMapping
@@ -41,5 +43,20 @@ public class LaboratorioController {
     public ResponseEntity retrieveByNombre(@PathVariable String nombre){
 
         return new ResponseEntity(laboratorioService.retrieveByNombre(nombre), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{laboratorioId}")
+    public ResponseEntity delete(@PathVariable Integer laboratorioId){
+        laboratorioService.delete(laboratorioId);
+
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @PutMapping("/{laboratorioId}")
+    public ResponseEntity replace(@PathVariable Integer laboratorioId,
+                                  @RequestBody LaboratorioDTO laboratorioDTO) {
+        laboratorioService.replace(laboratorioId, laboratorioDTO);
+
+        return new ResponseEntity(HttpStatus.OK);
     }
 }

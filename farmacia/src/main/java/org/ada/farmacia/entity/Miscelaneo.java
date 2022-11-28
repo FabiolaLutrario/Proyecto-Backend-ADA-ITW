@@ -18,18 +18,21 @@ public class Miscelaneo {
     private String descripcion;
 
     @Column(name="precio_compra", nullable=false)
-    private Float precioCompra;
+    private Double precioCompra;
+
+    @Column(name="precio_venta",nullable=false)
+    private Double precioVenta;
 
     @Column(nullable=false)
     private Integer stock;
 
-    @OneToMany(mappedBy = "miscelaneo", fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "miscelaneo")
     private List<DetalleCompraMiscelaneo> detalleCompraMiscelaneos;
 
     public Miscelaneo() {
     }
 
-    public Miscelaneo(String id, String nombre, String descripcion, Float precioCompra, Integer stock) {
+    public Miscelaneo(String id, String nombre, String descripcion, Double precioCompra, Integer stock) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -37,14 +40,14 @@ public class Miscelaneo {
         this.stock = stock;
     }
 
-    public Miscelaneo(String id, String nombre, Float precioCompra, Integer stock) {
+    public Miscelaneo(String id, String nombre, Double precioCompra, Integer stock) {
         this.id = id;
         this.nombre = nombre;
         this.precioCompra = precioCompra;
         this.stock = stock;
     }
 
-    public Miscelaneo(String id, String nombre, Float precioCompra, Integer stock, List<DetalleCompraMiscelaneo> detalleCompraMiscelaneos) {
+    public Miscelaneo(String id, String nombre, Double precioCompra, Integer stock, List<DetalleCompraMiscelaneo> detalleCompraMiscelaneos) {
         this.id = id;
         this.nombre = nombre;
         this.precioCompra = precioCompra;
@@ -52,13 +55,33 @@ public class Miscelaneo {
         this.detalleCompraMiscelaneos = detalleCompraMiscelaneos;
     }
 
-    public Miscelaneo(String id, String nombre, String descripcion, Float precioCompra, Integer stock, List<DetalleCompraMiscelaneo> detalleCompraMiscelaneos) {
+    public Miscelaneo(String id, String nombre, String descripcion, Double precioCompra, Integer stock, List<DetalleCompraMiscelaneo> detalleCompraMiscelaneos) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.precioCompra = precioCompra;
         this.stock = stock;
         this.detalleCompraMiscelaneos = detalleCompraMiscelaneos;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public void setPrecioCompra(Double precioCompra) {
+        this.precioCompra = precioCompra;
+    }
+
+    public void setPrecioVenta(Double precioVenta) {
+        this.precioVenta = precioVenta;
+    }
+
+    public void setStock(Integer stock) {
+        this.stock = stock;
     }
 
     public String getId() {
@@ -73,8 +96,12 @@ public class Miscelaneo {
         return descripcion;
     }
 
-    public Float getPrecioCompra() {
+    public Double getPrecioCompra() {
         return precioCompra;
+    }
+
+    public Double getPrecioVenta() {
+        return precioVenta;
     }
 
     public Integer getStock() {
@@ -86,5 +113,22 @@ public class Miscelaneo {
             detalleCompraMiscelaneos=new ArrayList<>();
         }
         return detalleCompraMiscelaneos;
+    }
+
+    public void modifyAttributeValue(String attributeName, Object newValue) {
+        switch (attributeName) {
+            case "nombre":
+                this.nombre = (String) newValue;
+                break;
+            case "descripcion":
+                this.descripcion = (String) newValue;
+                break;
+            case "precio_compra":
+                this.precioCompra = (Double) newValue;
+                break;
+            case "stock":
+                this.stock = (Integer) newValue;
+                break;
+        }
     }
 }
