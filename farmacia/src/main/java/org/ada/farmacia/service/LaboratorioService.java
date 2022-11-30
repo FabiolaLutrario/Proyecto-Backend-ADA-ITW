@@ -10,10 +10,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
-
-import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -35,7 +32,6 @@ public class LaboratorioService {
         laboratorioDTO.setId(laboratorio.getId());
         if(!CollectionUtils.isEmpty(laboratorioDTO.getMedicamentoDTOS())){
             medicamentoService.create(laboratorioDTO.getMedicamentoDTOS(), laboratorio);
-            //Crea un laboratorio desde 0 con una lista de medicamentos asociados.
         }
 
         return laboratorioDTO;

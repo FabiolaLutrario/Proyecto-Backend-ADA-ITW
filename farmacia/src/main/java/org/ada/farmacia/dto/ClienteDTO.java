@@ -67,7 +67,4 @@ public class ClienteDTO {
         return direccion;
     }
 
-    public List<FacturaDTO> getFacturaDTOS() {
-        return facturaDTOS;
-    }
 }

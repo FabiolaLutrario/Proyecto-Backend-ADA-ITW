@@ -52,10 +52,6 @@ public class MiscelaneoDTO {
         this.detalleCompraMiscelaneoDTOS = detalleCompraMiscelaneoDTOS;
     }
 
-    public void setPrecioVenta(Double precioVenta) {
-        this.precioVenta = precioVenta;
-    }
-
     public String getId() {
         return id;
     }
@@ -74,9 +70,5 @@ public class MiscelaneoDTO {
 
     public Integer getStock() {
         return stock;
-    }
-
-    public List<DetalleCompraMiscelaneoDTO> getDetalleCompraMiscelaneoDTOS() {
-        return detalleCompraMiscelaneoDTOS;
     }
 }

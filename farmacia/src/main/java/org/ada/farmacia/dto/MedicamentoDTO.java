@@ -90,10 +90,6 @@ public class MedicamentoDTO {
         this.laboratorioId = laboratorioId;
     }
 
-    public void setPrecioVenta(Double precioVenta) {
-        this.precioVenta = precioVenta;
-    }
-
     public String getId() {
         return id;
     }
@@ -126,15 +122,7 @@ public class MedicamentoDTO {
         return stock;
     }
 
-    public String getNombreLaboratorio() {
-        return nombreLaboratorio;
-    }
-
     public Integer getLaboratorioId() {
         return laboratorioId;
-    }
-
-    public List<DetalleCompraMedicamentoDTO> getDetalleCompraMedicamentoDTOS() {
-        return detalleCompraMedicamentoDTOS;
     }
 }

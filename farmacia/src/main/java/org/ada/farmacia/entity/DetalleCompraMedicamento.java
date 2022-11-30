@@ -13,10 +13,7 @@ public class DetalleCompraMedicamento {
     @Column(nullable=false)
     private Integer cantidad;
 
-    @Column(name="precio_unitario", nullable=false)
-    private Double precioUnitario;
-
-    @Column(name="precio_total", nullable=false)
+    @Column(name="precio_total")
     private Double precioTotal;
 
     @ManyToOne(fetch=FetchType.EAGER)
@@ -37,15 +34,6 @@ public class DetalleCompraMedicamento {
         this.factura = factura;
     }
 
-    public DetalleCompraMedicamento(Integer cantidad, Medicamento medicamento) {
-        this.cantidad = cantidad;
-        this.medicamento = medicamento;
-    }
-
-    public void setPrecioUnitario(Double precioUnitario) {
-        this.precioUnitario = precioUnitario;
-    }
-
     public void setPrecioTotal(Double precioTotal) {
         this.precioTotal = precioTotal;
     }
@@ -60,14 +48,6 @@ public class DetalleCompraMedicamento {
 
     public Medicamento getMedicamento() {
         return medicamento;
-    }
-
-    public Factura getFactura() {
-        return factura;
-    }
-
-    public Double getPrecioUnitario() {
-        return precioUnitario;
     }
 
     public Double getPrecioTotal() {

@@ -17,13 +17,9 @@ public class Factura {
     @Column (nullable=false)
     private LocalDate fecha;
 
-    @Column(nullable=false)
     private Double totalVenta;
 
-    @Column(nullable=false)
     private Double impuesto;
-
-    private String estado;
 
     @OneToMany(mappedBy = "factura",cascade = CascadeType.REMOVE)
     private List<DetalleCompraMedicamento> detalleCompraMedicamentos;
@@ -38,53 +34,8 @@ public class Factura {
     public Factura() {
     }
 
-    public Factura(Integer id, LocalDate fecha, List<DetalleCompraMedicamento> detalleCompraMedicamentos) {
-        this.fecha = fecha;
-        this.detalleCompraMedicamentos = detalleCompraMedicamentos;
-    }
-
     public Factura(LocalDate fecha, Cliente cliente) {
         this.fecha = fecha;
-        this.cliente = cliente;
-    }
-
-    public Factura(LocalDate fecha, String estado, Cliente cliente) {
-        this.fecha = fecha;
-        this.estado = estado;
-        this.cliente = cliente;
-    }
-
-    public Factura(LocalDate fecha, String estado, List<DetalleCompraMedicamento> detalleCompraMedicamentos) {
-        this.fecha = fecha;
-        this.estado = estado;
-        this.detalleCompraMedicamentos = detalleCompraMedicamentos;
-    }
-
-    public Factura(LocalDate fecha, String estado, List<DetalleCompraMiscelaneo> detalleCompraMiscelaneos, Cliente cliente) {
-        this.fecha = fecha;
-        this.estado = estado;
-        this.detalleCompraMiscelaneos = detalleCompraMiscelaneos;
-        this.cliente = cliente;
-    }
-
-    public Factura(LocalDate fecha, List<DetalleCompraMiscelaneo> detalleCompraMiscelaneos, Cliente cliente) {
-        this.fecha = fecha;
-        this.detalleCompraMiscelaneos = detalleCompraMiscelaneos;
-        this.cliente = cliente;
-    }
-
-    public Factura(LocalDate fecha, String estado, List<DetalleCompraMedicamento> detalleCompraMedicamentos, List<DetalleCompraMiscelaneo> detalleCompraMiscelaneos, Cliente cliente) {
-        this.fecha = fecha;
-        this.estado = estado;
-        this.detalleCompraMedicamentos = detalleCompraMedicamentos;
-        this.detalleCompraMiscelaneos = detalleCompraMiscelaneos;
-        this.cliente = cliente;
-    }
-
-    public Factura(LocalDate fecha, List<DetalleCompraMedicamento> detalleCompraMedicamentos, List<DetalleCompraMiscelaneo> detalleCompraMiscelaneos, Cliente cliente) {
-        this.fecha = fecha;
-        this.detalleCompraMedicamentos = detalleCompraMedicamentos;
-        this.detalleCompraMiscelaneos = detalleCompraMiscelaneos;
         this.cliente = cliente;
     }
 
@@ -110,10 +61,6 @@ public class Factura {
 
     public Double getImpuesto() {
         return impuesto;
-    }
-
-    public String getEstado() {
-        return estado;
     }
 
     public Cliente getCliente() {

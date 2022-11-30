@@ -1,6 +1,5 @@
 package org.ada.farmacia.entity;
 
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,30 +37,6 @@ public class Miscelaneo {
         this.descripcion = descripcion;
         this.precioCompra = precioCompra;
         this.stock = stock;
-    }
-
-    public Miscelaneo(String id, String nombre, Double precioCompra, Integer stock) {
-        this.id = id;
-        this.nombre = nombre;
-        this.precioCompra = precioCompra;
-        this.stock = stock;
-    }
-
-    public Miscelaneo(String id, String nombre, Double precioCompra, Integer stock, List<DetalleCompraMiscelaneo> detalleCompraMiscelaneos) {
-        this.id = id;
-        this.nombre = nombre;
-        this.precioCompra = precioCompra;
-        this.stock = stock;
-        this.detalleCompraMiscelaneos = detalleCompraMiscelaneos;
-    }
-
-    public Miscelaneo(String id, String nombre, String descripcion, Double precioCompra, Integer stock, List<DetalleCompraMiscelaneo> detalleCompraMiscelaneos) {
-        this.id = id;
-        this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.precioCompra = precioCompra;
-        this.stock = stock;
-        this.detalleCompraMiscelaneos = detalleCompraMiscelaneos;
     }
 
     public void setNombre(String nombre) {
@@ -125,6 +100,7 @@ public class Miscelaneo {
                 break;
             case "precio_compra":
                 this.precioCompra = (Double) newValue;
+                this.precioVenta = precioCompra*1.30;
                 break;
             case "stock":
                 this.stock = (Integer) newValue;

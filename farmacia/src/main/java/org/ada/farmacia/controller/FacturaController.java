@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping("/clientes/{clienteId}/facturas")
+@RequestMapping("/facturas")
 public class FacturaController {
 
     private final FacturaService facturaService;
@@ -18,9 +18,8 @@ public class FacturaController {
     }
 
     @PostMapping()
-    public ResponseEntity create(@PathVariable String clienteId,
-                                 @RequestBody FacturaDTO facturaDTO){
-        facturaService.create(facturaDTO, clienteId);
+    public ResponseEntity create(@RequestBody FacturaDTO facturaDTO){
+        facturaService.create(facturaDTO);
 
         return new ResponseEntity(facturaDTO.getId(), HttpStatus.CREATED);
     }

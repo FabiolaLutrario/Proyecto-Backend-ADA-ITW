@@ -14,21 +14,12 @@ public class FacturaDTO {
     private Double impuesto;
     @JsonAlias("total_venta")
     private Double totalVenta;
-    private String estado;
     @JsonAlias("detalle_compra_medicamento")
     private List<DetalleCompraMedicamentoDTO> detalleCompraMedicamentoDTOS;
     @JsonAlias("detalle_compra_miscelaneo")
     private List<DetalleCompraMiscelaneoDTO> detalleCompraMiscelaneoDTOS;
 
     public FacturaDTO() {
-    }
-
-    public FacturaDTO(String fecha, String idCliente, String estado, List<DetalleCompraMedicamentoDTO> detalleCompraMedicamentoDTOS, List<DetalleCompraMiscelaneoDTO> detalleCompraMiscelaneoDTOS) {
-        this.fecha = fecha;
-        this.idCliente = idCliente;
-        this.estado = estado;
-        this.detalleCompraMedicamentoDTOS = detalleCompraMedicamentoDTOS;
-        this.detalleCompraMiscelaneoDTOS = detalleCompraMiscelaneoDTOS;
     }
 
     public FacturaDTO(String fecha, String idCliente, List<DetalleCompraMedicamentoDTO> detalleCompraMedicamentoDTOS, List<DetalleCompraMiscelaneoDTO> detalleCompraMiscelaneoDTOS) {
@@ -38,18 +29,9 @@ public class FacturaDTO {
         this.detalleCompraMiscelaneoDTOS = detalleCompraMiscelaneoDTOS;
     }
 
-    public FacturaDTO(String fecha, List<DetalleCompraMedicamentoDTO> detalleCompraMedicamentoDTOS, List<DetalleCompraMiscelaneoDTO> detalleCompraMiscelaneoDTOS) {
-        this.fecha = fecha;
-        this.detalleCompraMedicamentoDTOS = detalleCompraMedicamentoDTOS;
-        this.detalleCompraMiscelaneoDTOS = detalleCompraMiscelaneoDTOS;
-    }
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public void setFecha(String fecha) {
-        this.fecha = fecha;
     }
 
     public void setImpuesto(Double impuesto) {
@@ -70,18 +52,6 @@ public class FacturaDTO {
 
     public String getIdCliente() {
         return idCliente;
-    }
-
-    public Double getImpuesto() {
-        return impuesto;
-    }
-
-    public Double getTotalVenta() {
-        return totalVenta;
-    }
-
-    public String getEstado() {
-        return estado;
     }
 
     public List<DetalleCompraMedicamentoDTO> getDetalleCompraMedicamentoDTOS() {

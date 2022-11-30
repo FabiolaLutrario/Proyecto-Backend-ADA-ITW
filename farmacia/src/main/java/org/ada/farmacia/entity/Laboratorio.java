@@ -16,7 +16,6 @@ public class Laboratorio {
     private String nombre;
 
     @OneToMany(mappedBy = "laboratorio", fetch = FetchType.EAGER)
-    //Qué tipo de cascada poner?
     private List<Medicamento> medicamentos;
 
     public Laboratorio() {
@@ -24,11 +23,6 @@ public class Laboratorio {
 
     public Laboratorio(String nombre) {
         this.nombre = nombre;
-    }
-
-    public Laboratorio(String nombre, List<Medicamento> medicamentos) {
-        this.nombre = nombre;
-        this.medicamentos = medicamentos;
     }
 
     public void setNombre(String nombre) {

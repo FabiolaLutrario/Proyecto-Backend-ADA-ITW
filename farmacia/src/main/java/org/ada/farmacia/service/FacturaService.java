@@ -1,20 +1,13 @@
 package org.ada.farmacia.service;
 
-import net.bytebuddy.asm.Advice;
 import org.ada.farmacia.dto.FacturaDTO;
-import org.ada.farmacia.entity.Cliente;
-import org.ada.farmacia.entity.DetalleCompraMedicamento;
-import org.ada.farmacia.entity.DetalleCompraMiscelaneo;
-import org.ada.farmacia.entity.Factura;
+import org.ada.farmacia.entity.*;
 import org.ada.farmacia.exceptions.ResourceNotFoundException;
-import org.ada.farmacia.repository.ClienteRepository;
-import org.ada.farmacia.repository.FacturaRepository;
+import org.ada.farmacia.repository.*;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -35,7 +28,8 @@ public class FacturaService {
         this.detalleCompraMiscelaneoService = detalleCompraMiscelaneoService;
     }
 
-    public FacturaDTO create(FacturaDTO facturaDTO, String clienteId){
+    public FacturaDTO create(FacturaDTO facturaDTO){
+        String clienteId= facturaDTO.getIdCliente();
         Optional<Cliente> cliente = clienteRepository.findById(clienteId);
         if(cliente.isEmpty()){
             throw new ResourceNotFoundException("El cliente no existe.");
@@ -43,18 +37,47 @@ public class FacturaService {
         Factura factura = mapToEntity(facturaDTO, cliente.get());
         factura = facturaRepository.save(factura);
         facturaDTO.setId(factura.getId());
+
+        //Sacar esto a otros métodos para que sea más legible el código
+        //por recomendación del prof
+
+        Double precioTotalDetalleCompraMedicamentos = 0.00;
+        Double precioTotalDetalleCompraMiscelaneos =0.00;
+
         if(!CollectionUtils.isEmpty(facturaDTO.getDetalleCompraMedicamentoDTOS())){
+
+            List <DetalleCompraMedicamento> detalleCompraMedicamentos =
             detalleCompraMedicamentoService.create(facturaDTO.getDetalleCompraMedicamentoDTOS(),
                     factura);
+
+            for (DetalleCompraMedicamento detalleCompraMedicamento: detalleCompraMedicamentos) {
+                precioTotalDetalleCompraMedicamentos = precioTotalDetalleCompraMedicamentos +
+                        detalleCompraMedicamento.getPrecioTotal();
+            }
         }
+
         if(!CollectionUtils.isEmpty(facturaDTO.getDetalleCompraMiscelaneoDTOS())){
+
+            List <DetalleCompraMiscelaneo> detalleCompraMiscelaneos =
             detalleCompraMiscelaneoService.create(facturaDTO.getDetalleCompraMiscelaneoDTOS(),
                     factura);
+
+            for (DetalleCompraMiscelaneo detalleCompraMiscelaneo: detalleCompraMiscelaneos) {
+                precioTotalDetalleCompraMiscelaneos = precioTotalDetalleCompraMiscelaneos +
+                        detalleCompraMiscelaneo.getPrecioTotal();
+            }
         }
+
         if(CollectionUtils.isEmpty(facturaDTO.getDetalleCompraMedicamentoDTOS())
         && CollectionUtils.isEmpty(facturaDTO.getDetalleCompraMiscelaneoDTOS())){
             throw new RuntimeException("No se puede generar una factura vacía");
         }
+
+        factura.setTotalVenta(precioTotalDetalleCompraMedicamentos+precioTotalDetalleCompraMiscelaneos);
+
+        factura.setImpuesto(factura.getTotalVenta()-(factura.getTotalVenta()/1.12));
+
+        facturaRepository.save(factura);
 
         return facturaDTO;
     }
@@ -84,14 +107,14 @@ public class FacturaService {
     private Factura mapToEntity(FacturaDTO facturaDTO, Cliente cliente) {
 
         Factura factura = new Factura(LocalDate.parse(facturaDTO.getFecha(), DATE_TIME_FORMATTER),
-                facturaDTO.getEstado(), cliente);
-        
+                cliente);
+
         return factura;
     }
 
     private FacturaDTO mapToDTO (Factura factura){
         FacturaDTO facturaDTO = new FacturaDTO(factura.getFecha().toString(),
-                factura.getCliente().getId(), factura.getEstado(),
+                factura.getCliente().getId(),
                 detalleCompraMedicamentoService.mapToDTOS(factura.getDetalleCompraMedicamentos()),
                 detalleCompraMiscelaneoService.mapToDTOS(factura.getDetalleCompraMiscelaneos()));
         facturaDTO.setId(factura.getId());

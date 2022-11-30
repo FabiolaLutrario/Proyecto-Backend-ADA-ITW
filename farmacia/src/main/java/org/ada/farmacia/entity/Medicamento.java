@@ -1,7 +1,5 @@
 package org.ada.farmacia.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +35,6 @@ public class Medicamento {
     @Column(nullable=false)
     private Integer stock;
 
-
     @ManyToOne(fetch=FetchType.EAGER)//Carga el laboratorio asociado a los medicamentos
     //cada vez que se consulten los medicamentos asociados a ese laboratorio.
     @JoinColumn(name="laboratorio_id")
@@ -60,20 +57,6 @@ public class Medicamento {
         this.stock = stock;
         this.laboratorio = laboratorio;
     }
-
-    public Medicamento(String id, String nombreComercial, String nombreGenerico, String presentacion, String principioActivo, String dosis, Double precioCompra, Integer stock, Laboratorio laboratorio, List<DetalleCompraMedicamento> detalleCompraMedicamentos) {
-        this.id = id;
-        this.nombreComercial = nombreComercial;
-        this.nombreGenerico = nombreGenerico;
-        this.presentacion = presentacion;
-        this.principioActivo = principioActivo;
-        this.dosis = dosis;
-        this.precioCompra = precioCompra;
-        this.stock = stock;
-        this.laboratorio = laboratorio;
-        this.detalleCompraMedicamentos = detalleCompraMedicamentos;
-    }
-
 
     public void setNombreComercial(String nombreComercial) {
         this.nombreComercial = nombreComercial;
@@ -158,8 +141,6 @@ public class Medicamento {
         return detalleCompraMedicamentos;
     }
 
-
-
     public void modifyAttributeValue(String attributeName, Object newValue) {
         switch (attributeName) {
             case "nombre_comercial":
@@ -179,6 +160,7 @@ public class Medicamento {
                 break;
             case "precio_compra":
                 this.precioCompra = (Double) newValue;
+                this.precioVenta = precioCompra*1.30;
                 break;
             case "stock":
                 this.stock = (Integer) newValue;

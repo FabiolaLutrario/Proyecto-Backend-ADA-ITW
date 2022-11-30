@@ -28,12 +28,6 @@ public class Cliente {
     public Cliente() {
     }
 
-    public Cliente(String id, String nombre, String apellido) {
-        this.id = id;
-        this.nombre = nombre;
-        this.apellido = apellido;
-    }
-
     public Cliente(String id, String nombre, String apellido, String contacto, String direccion) {
         this.id = id;
         this.nombre = nombre;
@@ -72,10 +66,6 @@ public class Cliente {
 
     public void setDireccion(String direccion) {
         this.direccion = direccion;
-    }
-
-    public void setFacturas(List<Factura> facturas) {
-        this.facturas = facturas;
     }
 
     public String getId() {

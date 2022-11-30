@@ -43,7 +43,7 @@ public class MedicamentoService {
         }
         Medicamento medicamento = mapToEntity(medicamentoDTO, laboratorio.get());
         checkForExistingMedicamento(medicamento.getId());
-        medicamento = medicamentoRepository.save(medicamento);
+        medicamentoRepository.save(medicamento);
 
         return medicamentoDTO;
     }
@@ -103,6 +103,7 @@ public class MedicamentoService {
         medicamentoToReplace.setPrincipioActivo(medicamentoDTO.getPrincipioActivo());
         medicamentoToReplace.setDosis(medicamentoDTO.getDosis());
         medicamentoToReplace.setPrecioCompra(medicamentoDTO.getPrecioCompra());
+        medicamentoToReplace.setPrecioVenta(medicamentoDTO.getPrecioCompra()*1.30);
         medicamentoToReplace.setStock(medicamentoDTO.getStock());
         Optional<Laboratorio> laboratorio = laboratorioRepository.findById(medicamentoDTO.getLaboratorioId());
         if (laboratorio.isEmpty()) {

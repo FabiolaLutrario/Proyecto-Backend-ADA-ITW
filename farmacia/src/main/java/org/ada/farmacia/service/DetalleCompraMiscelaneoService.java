@@ -1,6 +1,5 @@
 package org.ada.farmacia.service;
 
-import org.ada.farmacia.dto.DetalleCompraMedicamentoDTO;
 import org.ada.farmacia.dto.DetalleCompraMiscelaneoDTO;
 import org.ada.farmacia.entity.*;
 import org.ada.farmacia.exceptions.ResourceNotFoundException;
@@ -8,6 +7,7 @@ import org.ada.farmacia.repository.DetalleCompraMiscelaneoRepository;
 import org.ada.farmacia.repository.MiscelaneoRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -23,33 +23,26 @@ public class DetalleCompraMiscelaneoService {
         this.miscelaneoRepository = miscelaneoRepository;
     }
 
-    public void create(List<DetalleCompraMiscelaneoDTO> detalleCompraMiscelaneoDTOS, Factura factura) {
+    public List<DetalleCompraMiscelaneo> create(List<DetalleCompraMiscelaneoDTO> detalleCompraMiscelaneoDTOS, Factura factura) {
 
-//Código que agregué de forma rudimentaria para obtener el Objeto medicamento por Id (Se puede mejorar)
+        List <DetalleCompraMiscelaneo> detalleCompraMiscelaneos = new ArrayList<>();
+        for (DetalleCompraMiscelaneoDTO detalleCompraMiscelaneoDTO : detalleCompraMiscelaneoDTOS) {
 
-        for (DetalleCompraMiscelaneoDTO detalleCompraMiscelaneoDTO1 : detalleCompraMiscelaneoDTOS) {
-
-            Optional<Miscelaneo> miscelaneo = miscelaneoRepository.findById(detalleCompraMiscelaneoDTO1.getIdMiscelaneo());
+            Optional<Miscelaneo> miscelaneo = miscelaneoRepository.findById(detalleCompraMiscelaneoDTO.getIdMiscelaneo());
             if (miscelaneo.isEmpty()) {
                 throw new ResourceNotFoundException("EL producto que está intentando facturar no existe.");
             }
-            Miscelaneo miscelaneoGetter = miscelaneo.get();
-            DetalleCompraMiscelaneo detalleCompraMiscelaneo = mapToEntity(detalleCompraMiscelaneoDTO1, factura, miscelaneoGetter);
-
-
-            //Hasta acá el código que mencioné arriba que agregué
-
-            List<DetalleCompraMiscelaneo> detalleCompraMiscelaneos = detalleCompraMiscelaneoDTOS.stream()
-                    .map(detalleCompraMiscelaneoDTO -> mapToEntity(detalleCompraMiscelaneoDTO, factura, miscelaneoGetter))
-                    .collect(Collectors.toList());
-            detalleCompraMiscelaneoRepository.saveAll(detalleCompraMiscelaneos);
+            DetalleCompraMiscelaneo detalleCompraMiscelaneo =mapToEntity(detalleCompraMiscelaneoDTO, factura,miscelaneo.get());
+            detalleCompraMiscelaneoRepository.save(detalleCompraMiscelaneo);
+            detalleCompraMiscelaneos.add(detalleCompraMiscelaneo);
         }
+
+        return detalleCompraMiscelaneos;
     }
 
     private DetalleCompraMiscelaneo mapToEntity(DetalleCompraMiscelaneoDTO detalleCompraMiscelaneoDTO, Factura factura, Miscelaneo miscelaneo) {
         DetalleCompraMiscelaneo detalleCompraMiscelaneo = new DetalleCompraMiscelaneo(detalleCompraMiscelaneoDTO.getCantidad(),
                 miscelaneo,factura);
-        detalleCompraMiscelaneo.setPrecioUnitario(miscelaneo.getPrecioVenta());
         detalleCompraMiscelaneo.setPrecioTotal(miscelaneo.getPrecioVenta()
                 * detalleCompraMiscelaneoDTO.getCantidad());
 
@@ -66,7 +59,6 @@ public class DetalleCompraMiscelaneoService {
     private DetalleCompraMiscelaneoDTO mapToDTO (DetalleCompraMiscelaneo detalleCompraMiscelaneo){
         DetalleCompraMiscelaneoDTO detalleCompraMiscelaneoDTO = new DetalleCompraMiscelaneoDTO(detalleCompraMiscelaneo.getMiscelaneo().getId(),
                 detalleCompraMiscelaneo.getCantidad());
-        detalleCompraMiscelaneoDTO.setPrecioUnitario(detalleCompraMiscelaneo.getPrecioUnitario());
         detalleCompraMiscelaneoDTO.setPrecioTotal(detalleCompraMiscelaneo.getPrecioTotal());
 
         return detalleCompraMiscelaneoDTO;

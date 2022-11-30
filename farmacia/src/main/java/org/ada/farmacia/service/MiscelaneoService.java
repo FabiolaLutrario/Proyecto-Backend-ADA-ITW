@@ -17,7 +17,6 @@ public class MiscelaneoService {
 
     private final MiscelaneoRepository miscelaneoRepository;
 
-
     public MiscelaneoService(MiscelaneoRepository miscelaneoRepository) {
         this.miscelaneoRepository = miscelaneoRepository;
     }
@@ -25,7 +24,7 @@ public class MiscelaneoService {
     public MiscelaneoDTO create(MiscelaneoDTO miscelaneoDTO) {
         Miscelaneo miscelaneo = mapToEntity(miscelaneoDTO);
         checkForExistingMiscelaneo(miscelaneo.getId());
-        miscelaneo = miscelaneoRepository.save(miscelaneo);
+        miscelaneoRepository.save(miscelaneo);
 
         return miscelaneoDTO;
     }
@@ -72,6 +71,7 @@ public class MiscelaneoService {
         miscelaneoToReplace.setNombre(miscelaneoDTO.getNombre());
         miscelaneoToReplace.setDescripcion(miscelaneoDTO.getDescripcion());
         miscelaneoToReplace.setPrecioCompra(miscelaneoDTO.getPrecioCompra());
+        miscelaneoToReplace.setPrecioVenta(miscelaneoDTO.getPrecioCompra()*1.30);
         miscelaneoToReplace.setStock(miscelaneoDTO.getStock());
 
         miscelaneoRepository.save(miscelaneoToReplace);
