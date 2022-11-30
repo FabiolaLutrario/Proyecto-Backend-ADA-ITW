@@ -1,16 +1,11 @@
 package org.ada.farmacia.controller;
 
-import org.ada.farmacia.dto.LaboratorioDTO;
 import org.ada.farmacia.dto.MedicamentoDTO;
-import org.ada.farmacia.entity.Laboratorio;
-import org.ada.farmacia.entity.Medicamento;
 import org.ada.farmacia.service.MedicamentoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 @RestController

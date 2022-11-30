@@ -1,13 +1,10 @@
 package org.ada.farmacia.controller;
 
 import org.ada.farmacia.dto.LaboratorioDTO;
-import org.ada.farmacia.dto.MedicamentoDTO;
 import org.ada.farmacia.service.LaboratorioService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Map;
 
 @RestController
 @RequestMapping(path="/laboratorios")
