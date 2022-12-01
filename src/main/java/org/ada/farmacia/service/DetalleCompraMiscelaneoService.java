@@ -59,7 +59,9 @@ public class DetalleCompraMiscelaneoService {
     private DetalleCompraMiscelaneoDTO mapToDTO (DetalleCompraMiscelaneo detalleCompraMiscelaneo){
         DetalleCompraMiscelaneoDTO detalleCompraMiscelaneoDTO = new DetalleCompraMiscelaneoDTO(detalleCompraMiscelaneo.getMiscelaneo().getId(),
                 detalleCompraMiscelaneo.getCantidad());
+        detalleCompraMiscelaneoDTO.setPrecioUnitario(detalleCompraMiscelaneo.getPrecioTotal()/detalleCompraMiscelaneo.getCantidad());
         detalleCompraMiscelaneoDTO.setPrecioTotal(detalleCompraMiscelaneo.getPrecioTotal());
+        detalleCompraMiscelaneoDTO.setId(detalleCompraMiscelaneo.getId());
 
         return detalleCompraMiscelaneoDTO;
     }

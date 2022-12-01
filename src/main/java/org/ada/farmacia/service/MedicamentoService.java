@@ -104,7 +104,7 @@ public class MedicamentoService {
         medicamentoToReplace.setDosis(medicamentoDTO.getDosis());
         medicamentoToReplace.setPrecioCompra(medicamentoDTO.getPrecioCompra());
         medicamentoToReplace.setPrecioVenta(medicamentoDTO.getPrecioCompra()*1.30);
-        medicamentoToReplace.setStock(medicamentoDTO.getStock());
+        medicamentoToReplace.setStock(medicamentoToReplace.getStock() + medicamentoDTO.getStock());
         Optional<Laboratorio> laboratorio = laboratorioRepository.findById(medicamentoDTO.getLaboratorioId());
         if (laboratorio.isEmpty()) {
             throw new ResourceNotFoundException("EL laboratorio que está intentando asociar no existe.");
@@ -161,6 +161,7 @@ public class MedicamentoService {
         MedicamentoDTO medicamentoDTO = new MedicamentoDTO(medicamento.getId(),medicamento.getNombreComercial(),
                 medicamento.getNombreGenerico(),medicamento.getPresentacion(), medicamento.getPrincipioActivo(),
                 medicamento.getDosis(),medicamento.getPrecioCompra(), medicamento.getStock(), medicamento.getLaboratorio().getNombre());
+        medicamentoDTO.setLaboratorioId(medicamento.getLaboratorio().getId());
 
         return medicamentoDTO;
     }

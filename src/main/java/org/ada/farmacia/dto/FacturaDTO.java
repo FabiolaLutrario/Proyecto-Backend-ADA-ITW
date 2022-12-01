@@ -29,7 +29,6 @@ public class FacturaDTO {
         this.detalleCompraMiscelaneoDTOS = detalleCompraMiscelaneoDTOS;
     }
 
-
     public void setId(Integer id) {
         this.id = id;
     }
@@ -52,6 +51,14 @@ public class FacturaDTO {
 
     public String getIdCliente() {
         return idCliente;
+    }
+
+    public Double getImpuesto() {
+        return impuesto;
+    }
+
+    public Double getTotalVenta() {
+        return totalVenta;
     }
 
     public List<DetalleCompraMedicamentoDTO> getDetalleCompraMedicamentoDTOS() {

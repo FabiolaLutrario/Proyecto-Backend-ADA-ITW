@@ -72,7 +72,7 @@ public class MiscelaneoService {
         miscelaneoToReplace.setDescripcion(miscelaneoDTO.getDescripcion());
         miscelaneoToReplace.setPrecioCompra(miscelaneoDTO.getPrecioCompra());
         miscelaneoToReplace.setPrecioVenta(miscelaneoDTO.getPrecioCompra()*1.30);
-        miscelaneoToReplace.setStock(miscelaneoDTO.getStock());
+        miscelaneoToReplace.setStock(miscelaneoToReplace.getStock() + miscelaneoDTO.getStock());
 
         miscelaneoRepository.save(miscelaneoToReplace);
     }

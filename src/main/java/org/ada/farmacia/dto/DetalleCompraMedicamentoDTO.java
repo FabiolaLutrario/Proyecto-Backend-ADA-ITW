@@ -8,6 +8,8 @@ public class DetalleCompraMedicamentoDTO {
     @JsonAlias("medicamento_id")
     private String idMedicamento;
     private Integer cantidad;
+    @JsonAlias("precio_unitario")
+    private double precioUnitario;
     @JsonAlias("precio_total")
     private Double precioTotal;
 
@@ -23,6 +25,10 @@ public class DetalleCompraMedicamentoDTO {
         this.id = id;
     }
 
+    public void setPrecioUnitario(double precioUnitario) {
+        this.precioUnitario = precioUnitario;
+    }
+
     public void setPrecioTotal(Double precioTotal) {
         this.precioTotal = precioTotal;
     }
@@ -33,6 +39,14 @@ public class DetalleCompraMedicamentoDTO {
 
     public String getIdMedicamento() {
         return idMedicamento;
+    }
+
+    public double getPrecioUnitario() {
+        return precioUnitario;
+    }
+
+    public Double getPrecioTotal() {
+        return precioTotal;
     }
 
     public Integer getCantidad() {

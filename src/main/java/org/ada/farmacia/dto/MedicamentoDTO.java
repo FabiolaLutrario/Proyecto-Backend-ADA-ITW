@@ -30,6 +30,8 @@ public class MedicamentoDTO {
     public MedicamentoDTO() {
     }
 
+
+
     public MedicamentoDTO(String id, String nombreComercial, String nombreGenerico, String presentacion, String principioActivo, String dosis, Double precioCompra, Integer stock) {
         this.id = id;
         this.nombreComercial = nombreComercial;
@@ -90,6 +92,10 @@ public class MedicamentoDTO {
         this.laboratorioId = laboratorioId;
     }
 
+    public void setLaboratorioId(Integer laboratorioId) {
+        this.laboratorioId = laboratorioId;
+    }
+
     public String getId() {
         return id;
     }
@@ -124,5 +130,9 @@ public class MedicamentoDTO {
 
     public Integer getLaboratorioId() {
         return laboratorioId;
+    }
+
+    public String getNombreLaboratorio() {
+        return nombreLaboratorio;
     }
 }

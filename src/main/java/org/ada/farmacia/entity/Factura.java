@@ -55,16 +55,16 @@ public class Factura {
         return fecha;
     }
 
+    public Cliente getCliente() {
+        return cliente;
+    }
+
     public Double getTotalVenta() {
         return totalVenta;
     }
 
     public Double getImpuesto() {
         return impuesto;
-    }
-
-    public Cliente getCliente() {
-        return cliente;
     }
 
     public List<DetalleCompraMedicamento> getDetalleCompraMedicamentos() {

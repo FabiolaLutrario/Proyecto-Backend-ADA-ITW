@@ -59,7 +59,9 @@ public class DetalleCompraMedicamentoService {
     private DetalleCompraMedicamentoDTO mapToDTO (DetalleCompraMedicamento detalleCompraMedicamento){
         DetalleCompraMedicamentoDTO detalleCompraMedicamentoDTO = new DetalleCompraMedicamentoDTO(detalleCompraMedicamento.getMedicamento().getId(),
                 detalleCompraMedicamento.getCantidad());
+        detalleCompraMedicamentoDTO.setPrecioUnitario(detalleCompraMedicamento.getPrecioTotal()/detalleCompraMedicamento.getCantidad());
         detalleCompraMedicamentoDTO.setPrecioTotal(detalleCompraMedicamento.getPrecioTotal());
+        detalleCompraMedicamentoDTO.setId(detalleCompraMedicamento.getId());
 
         return detalleCompraMedicamentoDTO;
     }

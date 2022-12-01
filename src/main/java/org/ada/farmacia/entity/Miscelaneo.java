@@ -103,7 +103,7 @@ public class Miscelaneo {
                 this.precioVenta = precioCompra*1.30;
                 break;
             case "stock":
-                this.stock = (Integer) newValue;
+                this.stock = stock + (Integer) newValue;
                 break;
         }
     }

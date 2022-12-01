@@ -163,7 +163,7 @@ public class Medicamento {
                 this.precioVenta = precioCompra*1.30;
                 break;
             case "stock":
-                this.stock = (Integer) newValue;
+                this.stock = stock + (Integer) newValue;
                 break;
             case "laboratorio_id":
                 this.laboratorio = (Laboratorio) newValue;

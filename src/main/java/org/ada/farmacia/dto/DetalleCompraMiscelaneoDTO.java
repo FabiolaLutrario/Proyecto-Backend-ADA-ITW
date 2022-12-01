@@ -8,8 +8,9 @@ public class DetalleCompraMiscelaneoDTO {
     @JsonAlias("miscelaneo_id")
     private String idMiscelaneo;
     @JsonAlias("factura_id")
-    private Integer idFactura;
     private Integer cantidad;
+    @JsonAlias("precio_unitario")
+    private double precioUnitario;
     @JsonAlias("precio_total")
     private Double precioTotal;
 
@@ -21,14 +22,12 @@ public class DetalleCompraMiscelaneoDTO {
         this.cantidad = cantidad;
     }
 
-    public DetalleCompraMiscelaneoDTO(String idMiscelaneo, Integer idFactura, Integer cantidad) {
-        this.idMiscelaneo = idMiscelaneo;
-        this.idFactura = idFactura;
-        this.cantidad = cantidad;
-    }
-
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public void setPrecioUnitario(double precioUnitario) {
+        this.precioUnitario = precioUnitario;
     }
 
     public void setPrecioTotal(Double precioTotal) {
@@ -41,6 +40,14 @@ public class DetalleCompraMiscelaneoDTO {
 
     public Integer getCantidad() {
         return cantidad;
+    }
+
+    public double getPrecioUnitario() {
+        return precioUnitario;
+    }
+
+    public Double getPrecioTotal() {
+        return precioTotal;
     }
 
     public String getIdMiscelaneo() {
