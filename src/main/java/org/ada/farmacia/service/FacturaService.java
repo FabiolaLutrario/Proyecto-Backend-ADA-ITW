@@ -1,5 +1,7 @@
 package org.ada.farmacia.service;
 
+import org.ada.farmacia.dto.DetalleCompraMedicamentoDTO;
+import org.ada.farmacia.dto.DetalleCompraMiscelaneoDTO;
 import org.ada.farmacia.dto.FacturaDTO;
 import org.ada.farmacia.entity.*;
 import org.ada.farmacia.exceptions.ResourceNotFoundException;
@@ -38,34 +40,23 @@ public class FacturaService {
         factura = facturaRepository.save(factura);
         facturaDTO.setId(factura.getId());
 
-        //Sacar esto a otros métodos para que sea más legible el código
-        //por recomendación del prof
-
         Double precioTotalDetalleCompraMedicamentos = 0.00;
         Double precioTotalDetalleCompraMiscelaneos =0.00;
 
         if(!CollectionUtils.isEmpty(facturaDTO.getDetalleCompraMedicamentoDTOS())){
 
-            List <DetalleCompraMedicamento> detalleCompraMedicamentos =
-            detalleCompraMedicamentoService.create(facturaDTO.getDetalleCompraMedicamentoDTOS(),
-                    factura);
+            List<DetalleCompraMedicamento> detalleCompraMedicamentos =
+                    createDetalleCompraMedicamentos(facturaDTO.getDetalleCompraMedicamentoDTOS(), factura);
 
-            for (DetalleCompraMedicamento detalleCompraMedicamento: detalleCompraMedicamentos) {
-                precioTotalDetalleCompraMedicamentos = precioTotalDetalleCompraMedicamentos +
-                        detalleCompraMedicamento.getPrecioTotal();
-            }
+            precioTotalDetalleCompraMedicamentos = obtenerPrecioTotalDetalleCompraMedicamentos(detalleCompraMedicamentos);
         }
 
         if(!CollectionUtils.isEmpty(facturaDTO.getDetalleCompraMiscelaneoDTOS())){
 
-            List <DetalleCompraMiscelaneo> detalleCompraMiscelaneos =
-            detalleCompraMiscelaneoService.create(facturaDTO.getDetalleCompraMiscelaneoDTOS(),
-                    factura);
+            List<DetalleCompraMiscelaneo> detalleCompraMiscelaneos =
+                    createDetalleCompraMiscelaneos(facturaDTO.getDetalleCompraMiscelaneoDTOS(), factura);
 
-            for (DetalleCompraMiscelaneo detalleCompraMiscelaneo: detalleCompraMiscelaneos) {
-                precioTotalDetalleCompraMiscelaneos = precioTotalDetalleCompraMiscelaneos +
-                        detalleCompraMiscelaneo.getPrecioTotal();
-            }
+            precioTotalDetalleCompraMiscelaneos = obtenerPrecioTotalDetalleCompraMiscelaneos(detalleCompraMiscelaneos);
         }
 
         if(CollectionUtils.isEmpty(facturaDTO.getDetalleCompraMedicamentoDTOS())
@@ -104,14 +95,6 @@ public class FacturaService {
                 .collect(Collectors.toList());
     }
 
-    private Factura mapToEntity(FacturaDTO facturaDTO, Cliente cliente) {
-
-        Factura factura = new Factura(LocalDate.parse(facturaDTO.getFecha(), DATE_TIME_FORMATTER),
-                cliente);
-
-        return factura;
-    }
-
     private FacturaDTO mapToDTO (Factura factura){
         FacturaDTO facturaDTO = new FacturaDTO(factura.getFecha().toString(),
                 factura.getCliente().getId(),
@@ -122,5 +105,51 @@ public class FacturaService {
         facturaDTO.setTotalVenta(factura.getTotalVenta());
 
         return facturaDTO;
+    }
+
+    private Factura mapToEntity(FacturaDTO facturaDTO, Cliente cliente) {
+
+        Factura factura = new Factura(LocalDate.parse(facturaDTO.getFecha(), DATE_TIME_FORMATTER),
+                cliente);
+
+        return factura;
+    }
+
+    private List<DetalleCompraMedicamento> createDetalleCompraMedicamentos(List<DetalleCompraMedicamentoDTO> detalleCompraMedicamentoDTOS,
+                                                                           Factura factura){
+        List <DetalleCompraMedicamento> detalleCompraMedicamentos =
+                detalleCompraMedicamentoService.create(detalleCompraMedicamentoDTOS,
+                        factura);
+
+        return detalleCompraMedicamentos;
+    }
+
+    private Double obtenerPrecioTotalDetalleCompraMedicamentos(List<DetalleCompraMedicamento> detalleCompraMedicamentos){
+
+        Double precioTotalDetalleCompraMedicamentos=0.00;
+        for (DetalleCompraMedicamento detalleCompraMedicamento: detalleCompraMedicamentos) {
+            precioTotalDetalleCompraMedicamentos = precioTotalDetalleCompraMedicamentos +
+                    detalleCompraMedicamento.getPrecioTotal();
+        }
+        return precioTotalDetalleCompraMedicamentos;
+    }
+
+    private List<DetalleCompraMiscelaneo> createDetalleCompraMiscelaneos(List<DetalleCompraMiscelaneoDTO> detalleCompraMiscelaneoDTOS,
+                                                                         Factura factura){
+        List <DetalleCompraMiscelaneo> detalleCompraMiscelaneos =
+                detalleCompraMiscelaneoService.create(detalleCompraMiscelaneoDTOS,
+                        factura);
+
+        return detalleCompraMiscelaneos;
+    }
+
+    private Double obtenerPrecioTotalDetalleCompraMiscelaneos(List<DetalleCompraMiscelaneo> detalleCompraMiscelaneos){
+
+        Double precioTotalDetalleCompraMiscelaneos=0.00;
+        for (DetalleCompraMiscelaneo detalleCompraMiscelaneo: detalleCompraMiscelaneos) {
+            precioTotalDetalleCompraMiscelaneos = precioTotalDetalleCompraMiscelaneos +
+                    detalleCompraMiscelaneo.getPrecioTotal();
+        }
+        return precioTotalDetalleCompraMiscelaneos;
     }
 }

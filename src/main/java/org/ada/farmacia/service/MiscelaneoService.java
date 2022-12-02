@@ -104,7 +104,6 @@ public class MiscelaneoService {
                 miscelaneo.getStock());
 
         return miscelaneoDTO;
-
     }
 
     private void checkForExistingMiscelaneo(String miscelaneoId){
